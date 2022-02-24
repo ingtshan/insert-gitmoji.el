@@ -35,7 +35,7 @@
   "Emoji data, to be populated from the file `gitmoji-json-file'.")
 
 (defvar gitmoji-json-file
-  (expand-file-name "data/gitmojis.json" (file-name-directory (locate-library "gitmoji")))
+  (expand-file-name "data/gitmojis.json" (file-name-directory (locate-library "insert-gitmoji")))
   "JSON file to read gitmoji emoji data from.")
 
 (defun gitmoji-set-emoji-data (&optional force)
@@ -78,5 +78,5 @@ Reads emoji data if it hasn't been already or if FORCE is given."
   (interactive)
   (insert (gitmoji-completing-read "Insert Gitmoji: ")))
 
-(provide 'gitmoji)
+(provide 'insert-gitmoji)
 ;;; gitmoji.el ends here
