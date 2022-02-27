@@ -56,12 +56,13 @@ Reads emoji data if it hasn't been already or if FORCE is given."
                               (gethash "description" gitmoji)))
                     gitmojis)))))
 
+;;;###autoload
 (defun gitmoji-completing-read (prompt &optional predicate require-match initial-input hist def inherit-input-method)
   "Prompt for selecting an emoji and return the selected emoji."
   (gitmoji-set-emoji-data)
-  (let ((emojify-minibuffer-reading-emojis-p t)
-        (minibuffer-setup-hook (cons #'emojify--completing-read-minibuffer-setup-hook minibuffer-setup-hook)))
-    (substring (funcall completing-read-function
+  (let* ((emojify-minibuffer-reading-emojis-p t)
+         (minibuffer-setup-hook (cons #'emojify--completing-read-minibuffer-setup-hook minibuffer-setup-hook))
+         (input (funcall completing-read-function
                         prompt
                         gitmoji-emojis
                         predicate
@@ -69,8 +70,9 @@ Reads emoji data if it hasn't been already or if FORCE is given."
                         initial-input
                         hist
                         def
-                        inherit-input-method)
-               0 1)))
+                        inherit-input-method)))
+    (if (equal input "") input
+      (substring input 0 1))))
 
 ;;;###autoload
 (defun gitmoji-insert-emoji ()
